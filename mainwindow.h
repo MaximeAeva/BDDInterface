@@ -8,6 +8,7 @@
 #include <QSqlQuery>
 #include <QtSql>
 #include <QString>
+#include <QSqlError>
 #include <fstream>
 #include <string>
 
