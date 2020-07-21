@@ -7,6 +7,8 @@
 #include <QDate>
 #include <QSqlQuery>
 #include <QtSql>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -27,6 +29,7 @@ public slots:
 private:
     Ui::MainWindow *ui;
     QSqlDatabase db;
-    void connectDB();
+    void ConnectDB();
+    string Readconfig(string paramName);
 };
 #endif // MAINWINDOW_H
