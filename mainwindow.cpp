@@ -8,8 +8,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->date_sortie->setDate(QDate::currentDate());
     ConnectDB();
-    cout << Readconfig("HOST") << endl;
-
 }
 
 void MainWindow::save()
@@ -25,15 +23,15 @@ MainWindow::~MainWindow()
 void MainWindow::ConnectDB()
 {
     db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("localhost");
-    db.setDatabaseName("Sidel");
-    db.setUserName("root");
-    db.setPassword("GEBO0388");
+    db.setHostName(Readconfig("HOST"));
+    db.setDatabaseName(Readconfig("NAME"));
+    db.setUserName(Readconfig("USER"));
+    db.setPassword(Readconfig("PASSWORD"));
     if(db.open()){ui->connect->setChecked(true);}
     else{ui->connect->setChecked(false);}
 }
 
-string MainWindow::Readconfig(string paramName)
+QString MainWindow::Readconfig(string paramName)
 {
     std::ifstream cfg("C:/Users/maxime.bellot/Documents/build-SidelParcInterface-Desktop_x86_windows_msvc2019_pe_64bit-Debug/debug/config.txt");
     if(!cfg.is_open())
@@ -44,7 +42,7 @@ string MainWindow::Readconfig(string paramName)
     string parm, value;
     while (cfg >> parm >> value)
     {
-        if(parm== paramName){return value;}
+        if(parm== paramName){return QString::fromStdString(value);}
     }
     return 0;
 }

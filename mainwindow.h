@@ -7,6 +7,7 @@
 #include <QDate>
 #include <QSqlQuery>
 #include <QtSql>
+#include <QString>
 #include <fstream>
 #include <string>
 
@@ -30,6 +31,6 @@ private:
     Ui::MainWindow *ui;
     QSqlDatabase db;
     void ConnectDB();
-    string Readconfig(string paramName);
+    QString Readconfig(string paramName);
 };
 #endif // MAINWINDOW_H
