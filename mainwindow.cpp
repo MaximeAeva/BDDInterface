@@ -33,7 +33,7 @@ void MainWindow::ConnectDB()
 
 QString MainWindow::Readconfig(string paramName)
 {
-    std::ifstream cfg("C:/Users/maxime.bellot/Documents/build-SidelParcInterface-Desktop_x86_windows_msvc2019_pe_64bit-Debug/debug/config.txt");
+    std::ifstream cfg("config.txt");
     if(!cfg.is_open())
     {
         cout << "failed" << endl;
