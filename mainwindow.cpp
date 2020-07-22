@@ -23,7 +23,7 @@ void MainWindow::save()
     QString modele = ui->modele->currentText();
     int recipe = ui->recipe->value();
 
-    QSqlQuery query;
+    QSqlQuery query(db);
     query.prepare("INSERT INTO Machine (affaire, nom_courant, remarque, rapport_fat, cadence, bouchons, date_sortie, modele, recipe) "
                    "VALUES (:affaire, :nom_courant, :remarque, :rapport_fat, :cadence, :bouchons, :date_sortie, :modele, :recipe)");
     query.bindValue(":affaire", affaire);
@@ -67,7 +67,9 @@ void MainWindow::ConnectDB()
         ui->connect->setChecked(true);
         ui->connect->setText(db.databaseName());
     }
-    else{
+    else
+    {
+        qDebug() << db.lastError();
         ui->connect->setChecked(false);
         ui->connect->setText("Not connected");
     }
