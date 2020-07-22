@@ -14,17 +14,23 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QRadioButton" name="connect">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="cursor">
-       <cursorShape>ArrowCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QRadioButton{
+   <widget class="QRadioButton" name="connect">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>9</y>
+      <width>112</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QRadioButton{
 	background: grey;
 	color: white;
 	border:  2px solid grey;
@@ -45,383 +51,422 @@ QRadioButton::indicator:unchecked {
     background-color:       red;
     border:                 2px solid white;
 }</string>
-      </property>
-      <property name="text">
-       <string>Connection status</string>
-      </property>
-      <property name="checkable">
-       <bool>true</bool>
-      </property>
-      <property name="checked">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <widget class="QWidget" name="tab">
-       <attribute name="title">
-        <string>Add</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="8" column="1">
-         <widget class="QLineEdit" name="remarque"/>
+    </property>
+    <property name="text">
+     <string>Connection status</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>771</width>
+      <height>481</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Add</string>
+     </attribute>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="8" column="1">
+       <widget class="QLineEdit" name="remarque"/>
+      </item>
+      <item row="7" column="1">
+       <widget class="QComboBox" name="modele">
+        <item>
+         <property name="text">
+          <string>SIE</string>
+         </property>
         </item>
-        <item row="7" column="1">
-         <widget class="QComboBox" name="modele">
-          <item>
-           <property name="text">
-            <string>SIE</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>B&amp;R</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>ROC</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>OTH</string>
-           </property>
-          </item>
-         </widget>
+        <item>
+         <property name="text">
+          <string>B&amp;R</string>
+         </property>
         </item>
-        <item row="15" column="0" colspan="2">
-         <widget class="QPushButton" name="Valider">
-          <property name="text">
-           <string>Valider</string>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>ROC</string>
+         </property>
         </item>
-        <item row="4" column="1">
-         <widget class="QDateEdit" name="date_sortie">
-          <property name="calendarPopup">
-           <bool>true</bool>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>OTH</string>
+         </property>
         </item>
-        <item row="7" column="0">
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>Modele</string>
-          </property>
-         </widget>
+       </widget>
+      </item>
+      <item row="15" column="0" colspan="2">
+       <widget class="QPushButton" name="Valider">
+        <property name="text">
+         <string>Valider</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QDateEdit" name="date_sortie">
+        <property name="calendarPopup">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Modele</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSpinBox" name="cadence">
+        <property name="minimum">
+         <number>1000</number>
+        </property>
+        <property name="maximum">
+         <number>200000</number>
+        </property>
+        <property name="value">
+         <number>50000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Type de bouchons</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>FAT Path</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Recipe</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QComboBox" name="bouchons">
+        <property name="editable">
+         <bool>false</bool>
+        </property>
+        <item>
+         <property name="text">
+          <string>classiques</string>
+         </property>
         </item>
-        <item row="3" column="1">
-         <widget class="QSpinBox" name="cadence">
-          <property name="minimum">
-           <number>1000</number>
-          </property>
-          <property name="maximum">
-           <number>200000</number>
-          </property>
-          <property name="value">
-           <number>50000</number>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>oil</string>
+         </property>
         </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Type de bouchons</string>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>crown</string>
+         </property>
         </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>FAT Path</string>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>spe</string>
+         </property>
         </item>
-        <item row="9" column="0">
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>Recipe</string>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>oversize</string>
+         </property>
         </item>
-        <item row="5" column="1">
-         <widget class="QComboBox" name="bouchons">
-          <property name="editable">
-           <bool>false</bool>
-          </property>
-          <item>
-           <property name="text">
-            <string>classiques</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>oil</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>crown</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>spe</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>oversize</string>
-           </property>
-          </item>
-         </widget>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Remarque</string>
+        </property>
+       </widget>
+      </item>
+      <item row="13" column="1">
+       <widget class="QComboBox" name="marque_2">
+        <item>
+         <property name="text">
+          <string/>
+         </property>
         </item>
-        <item row="8" column="0">
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>Remarque</string>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>COGNEX</string>
+         </property>
         </item>
-        <item row="13" column="1">
-         <widget class="QComboBox" name="marque_2">
-          <item>
-           <property name="text">
-            <string/>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>COGNEX</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>PRESSCO</string>
-           </property>
-          </item>
-         </widget>
+        <item>
+         <property name="text">
+          <string>PRESSCO</string>
+         </property>
         </item>
-        <item row="2" column="1">
-         <widget class="QLineEdit" name="nom_courant">
-          <property name="inputMask">
-           <string/>
-          </property>
-          <property name="text">
-           <string>Nom</string>
-          </property>
-          <property name="maxLength">
-           <number>32767</number>
-          </property>
-         </widget>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="nom_courant">
+        <property name="inputMask">
+         <string/>
+        </property>
+        <property name="text">
+         <string>Nom</string>
+        </property>
+        <property name="maxLength">
+         <number>32767</number>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QComboBox" name="marque">
+        <item>
+         <property name="text">
+          <string/>
+         </property>
         </item>
-        <item row="10" column="1">
-         <widget class="QComboBox" name="marque">
-          <item>
-           <property name="text">
-            <string/>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>COGNEX</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>PRESSCO</string>
-           </property>
-          </item>
-         </widget>
+        <item>
+         <property name="text">
+          <string>COGNEX</string>
+         </property>
         </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Date de Fat</string>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>PRESSCO</string>
+         </property>
         </item>
-        <item row="10" column="0">
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>Cameras</string>
-          </property>
-         </widget>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Date de Fat</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Cameras</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Cadence</string>
+        </property>
+       </widget>
+      </item>
+      <item row="14" column="1">
+       <widget class="QComboBox" name="modele_cam_2">
+        <item>
+         <property name="text">
+          <string/>
+         </property>
         </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Cadence</string>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>7800C</string>
+         </property>
         </item>
-        <item row="14" column="1">
-         <widget class="QComboBox" name="modele_cam_2">
-          <item>
-           <property name="text">
-            <string/>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>7800C</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>7800M</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>7400M</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>7400C</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>2000C</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>5705C</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>8101C</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>CHECK</string>
-           </property>
-          </item>
-         </widget>
+        <item>
+         <property name="text">
+          <string>7800M</string>
+         </property>
         </item>
-        <item row="6" column="1">
-         <widget class="QLineEdit" name="rapport_fat">
-          <property name="inputMask">
-           <string/>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>7400M</string>
+         </property>
         </item>
-        <item row="2" column="0">
-         <widget class="QLineEdit" name="affaire">
-          <property name="inputMask">
-           <string>A999999A</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="maxLength">
-           <number>8</number>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>7400C</string>
+         </property>
         </item>
-        <item row="9" column="1">
-         <widget class="QSpinBox" name="recipe">
-          <property name="minimum">
-           <number>1</number>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>2000C</string>
+         </property>
         </item>
-        <item row="12" column="1">
-         <widget class="QComboBox" name="modele_cam">
-          <item>
-           <property name="text">
-            <string/>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>7800M</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>7800C</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>7400M</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>7400C</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>8101C</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>2000C</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>5705C</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>5705M</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>CHECK</string>
-           </property>
-          </item>
-         </widget>
+        <item>
+         <property name="text">
+          <string>5705C</string>
+         </property>
         </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string>Affaire</string>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>8101C</string>
+         </property>
         </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tab_2">
-       <attribute name="title">
-        <string>Update</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="tab_3">
-       <attribute name="title">
-        <string>Problem</string>
-       </attribute>
-      </widget>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="Quit">
-      <property name="text">
-       <string>Bye</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+        <item>
+         <property name="text">
+          <string>CHECK</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLineEdit" name="rapport_fat">
+        <property name="inputMask">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLineEdit" name="affaire">
+        <property name="inputMethodHints">
+         <set>Qt::ImhUppercaseOnly</set>
+        </property>
+        <property name="inputMask">
+         <string>A999999A</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="maxLength">
+         <number>8</number>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QSpinBox" name="recipe">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="1">
+       <widget class="QComboBox" name="modele_cam">
+        <item>
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>7800M</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>7800C</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>7400M</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>7400C</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>8101C</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>2000C</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>5705C</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>5705M</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>CHECK</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Affaire</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Update</string>
+     </attribute>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>Table</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="comboBox"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Affaire</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="inputMask">
+         <string>A999999A</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Problem</string>
+     </attribute>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="Quit">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>520</y>
+      <width>321</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Bye</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

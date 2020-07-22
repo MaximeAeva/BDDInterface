@@ -32,6 +32,8 @@ private:
     Ui::MainWindow *ui;
     QSqlDatabase db;
     void ConnectDB();
+    void InitialState();
+    void CameraReg(QString machine, QString marque, QString modele);
     QString Readconfig(string paramName);
 };
 #endif // MAINWINDOW_H

@@ -6,10 +6,29 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->date_sortie->setDate(QDate::currentDate());
+    InitialState();
     ConnectDB();
     connect(ui->Valider, SIGNAL(clicked()), this, SLOT(save()));
+    connect(ui->marque, SIGNAL(currentIndexChanged(int)), ui->modele_cam, SLOT(show()));
+    connect(ui->marque, SIGNAL(currentIndexChanged(int)), ui->marque_2, SLOT(show()));
+    connect(ui->marque_2, SIGNAL(currentIndexChanged(int)), ui->modele_cam_2, SLOT(show()));
 }
+
+void MainWindow::InitialState()
+{
+    ui->date_sortie->setDate(QDate::currentDate());
+    ui->modele_cam->hide();
+    ui->modele_cam_2->hide();
+    ui->marque_2->hide();
+    ui->affaire->clear();
+    ui->nom_courant->clear();
+    ui->remarque->clear();
+    ui->rapport_fat->clear();
+    ui->cadence->setValue(50000);
+    ui->date_sortie->setDate(QDate::currentDate());
+    ui->recipe->setValue(1);
+}
+
 
 void MainWindow::save()
 {
@@ -22,6 +41,11 @@ void MainWindow::save()
     QDate date_sortie = ui->date_sortie->date();
     QString modele = ui->modele->currentText();
     int recipe = ui->recipe->value();
+    QString marque = ui->marque->currentText();
+    QString marque_2 = ui->marque_2->currentText();
+    QString modele_cam = ui->modele_cam->currentText();
+    QString modele_cam_2 = ui->modele_cam_2->currentText();
+
 
     QSqlQuery query(db);
     query.prepare("INSERT INTO Machine (affaire, nom_courant, remarque, rapport_fat, cadence, bouchons, date_sortie, modele, recipe) "
@@ -38,15 +62,10 @@ void MainWindow::save()
 
     query.exec();
 
+    CameraReg(affaire, marque, modele_cam);
+    CameraReg(affaire, marque_2, modele_cam_2);
 
-    ui->affaire->clear();
-    ui->nom_courant->clear();
-    ui->remarque->clear();
-    ui->rapport_fat->clear();
-    ui->cadence->setValue(50000);
-    ui->date_sortie->setDate(QDate::currentDate());
-    ui->recipe->setValue(1);
-
+    InitialState();
 }
 
 MainWindow::~MainWindow()
@@ -89,4 +108,29 @@ QString MainWindow::Readconfig(string paramName)
         if(parm== paramName){return QString::fromStdString(value);}
     }
     return 0;
+}
+
+void MainWindow::CameraReg(QString machine, QString marque, QString modele)
+{
+    if(marque.isEmpty()){return;}
+
+    QSqlQuery queryCam(db);
+
+    if(modele.isEmpty())
+    {
+        queryCam.prepare("INSERT INTO Camera(machine, marque) "
+                         "VALUES(:machine, :marque)");
+    }
+    else
+    {
+        queryCam.prepare("INSERT INTO Camera(machine, marque, modele) "
+                         "VALUES(:machine, :marque, :modele)");
+        queryCam.bindValue(":modele", modele);
+    }
+
+    queryCam.bindValue(":machine", machine);
+    queryCam.bindValue(":marque", marque);
+
+
+    queryCam.exec();
 }
