@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setWindowTitle(QString::fromStdString("SidelParcInterface"));
+    this->setWindowIcon(QIcon("SIDEL.png"));
     InitialState();
     ConnectDB();
     connect(ui->Valider, SIGNAL(clicked()), this, SLOT(save()));
