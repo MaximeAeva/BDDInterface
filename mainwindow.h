@@ -10,7 +10,6 @@
 #include <QString>
 #include <QSqlError>
 #include <fstream>
-#include <string>
 
 using namespace std;
 
@@ -25,6 +24,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
 public slots:
     void save();
 
@@ -34,6 +34,7 @@ private:
     void ConnectDB();
     void InitialState();
     void CameraReg(QString machine, QString marque, QString modele);
+    void UpdatePageUpdateCombo();
     QString Readconfig(string paramName);
 };
 #endif // MAINWINDOW_H

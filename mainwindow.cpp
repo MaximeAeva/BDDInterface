@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowIcon(QIcon("SIDEL.png"));
     InitialState();
     ConnectDB();
+    UpdatePageUpdateCombo();
     connect(ui->Valider, SIGNAL(clicked()), this, SLOT(save()));
     connect(ui->marque, SIGNAL(currentIndexChanged(int)), ui->modele_cam, SLOT(show()));
     connect(ui->marque, SIGNAL(currentIndexChanged(int)), ui->marque_2, SLOT(show()));
@@ -68,6 +69,7 @@ void MainWindow::save()
     CameraReg(affaire, marque_2, modele_cam_2);
 
     InitialState();
+    UpdatePageUpdateCombo();
 }
 
 MainWindow::~MainWindow()
@@ -135,4 +137,35 @@ void MainWindow::CameraReg(QString machine, QString marque, QString modele)
 
 
     queryCam.exec();
+}
+
+void MainWindow::UpdatePageUpdateCombo()
+{
+    QSqlQueryModel *affaire = new QSqlQueryModel;
+    affaire->setQuery("SELECT affaire AS affaire FROM Machine");
+    for(int i = 0; i<affaire->rowCount(); i++)
+    {
+        ui->up_affaire->addItem(affaire->record(i).value("affaire").toString());
+    }
+
+    QSqlQueryModel *table = new QSqlQueryModel;
+    table->setQuery("SELECT table_name as tables FROM information_schema.tables "
+                    "WHERE table_schema = 'Sidel'");
+    for(int i = 0; i<table->rowCount(); i++)
+    {
+        ui->up_table->addItem(table->record(i).value("tables").toString());
+    }
+
+    QSqlQuery *query = new QSqlQuery;
+    QSqlQueryModel *columns = new QSqlQueryModel;
+    query->prepare("SELECT column_name AS columns"
+                    "FROM information_schema.columns "
+                    "WHERE table_name=':table'");
+    query->bindValue(":table", ui->up_table->currentText());
+    columns->setQuery(*query);
+    for(int i = 0; i<columns->rowCount(); i++)
+    {
+        ui->up_champ->addItem(columns->record(i).value("columns").toString());
+    }
+
 }

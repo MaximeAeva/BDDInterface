@@ -72,7 +72,7 @@ QRadioButton::indicator:unchecked {
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -422,15 +422,21 @@ QRadioButton::indicator:unchecked {
       <string>Update</string>
      </attribute>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_10">
+      <item row="0" column="1">
+       <widget class="QComboBox" name="up_affaire"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="up_table"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_13">
         <property name="text">
-         <string>Table</string>
+         <string>Valeur</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="comboBox"/>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="up_valeur"/>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_11">
@@ -439,10 +445,27 @@ QRadioButton::indicator:unchecked {
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="inputMask">
-         <string>A999999A</string>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_12">
+        <property name="text">
+         <string>Champ</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>Table</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="up_champ"/>
+      </item>
+      <item row="4" column="1">
+       <widget class="QPushButton" name="up_valider">
+        <property name="text">
+         <string>Valider</string>
         </property>
        </widget>
       </item>
