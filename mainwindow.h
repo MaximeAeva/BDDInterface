@@ -10,6 +10,7 @@
 #include <QString>
 #include <QSqlError>
 #include <fstream>
+#include <cstring>
 
 using namespace std;
 
@@ -27,6 +28,8 @@ public:
 
 public slots:
     void save();
+    void update();
+    void adaptiveDisplay();
 
 private:
     Ui::MainWindow *ui;

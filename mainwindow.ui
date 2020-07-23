@@ -422,50 +422,50 @@ QRadioButton::indicator:unchecked {
       <string>Update</string>
      </attribute>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="1">
-       <widget class="QComboBox" name="up_affaire"/>
+      <item row="4" column="2">
+       <widget class="QLineEdit" name="up_valeur"/>
       </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="up_table"/>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_13">
+      <item row="5" column="2">
+       <widget class="QPushButton" name="up_valider">
         <property name="text">
-         <string>Valeur</string>
+         <string>Valider</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="up_valeur"/>
+      <item row="3" column="2">
+       <widget class="QComboBox" name="up_champ"/>
       </item>
-      <item row="0" column="0">
+      <item row="1" column="0">
        <widget class="QLabel" name="label_11">
         <property name="text">
          <string>Affaire</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_12">
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_13">
         <property name="text">
-         <string>Champ</string>
+         <string>Valeur</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item row="0" column="0">
        <widget class="QLabel" name="label_10">
         <property name="text">
          <string>Table</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QComboBox" name="up_champ"/>
+      <item row="1" column="2">
+       <widget class="QComboBox" name="up_affaire"/>
       </item>
-      <item row="4" column="1">
-       <widget class="QPushButton" name="up_valider">
+      <item row="0" column="2">
+       <widget class="QComboBox" name="up_table"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_12">
         <property name="text">
-         <string>Valider</string>
+         <string>Champ</string>
         </property>
        </widget>
       </item>

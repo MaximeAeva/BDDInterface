@@ -6,8 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setWindowTitle(QString::fromStdString("SidelParcInterface"));
-    this->setWindowIcon(QIcon("SIDEL.png"));
+    this->setWindowTitle(Readconfig("WINDOW"));
+    this->setWindowIcon(QIcon(Readconfig("ICON")));
     InitialState();
     ConnectDB();
     UpdatePageUpdateCombo();
@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->marque, SIGNAL(currentIndexChanged(int)), ui->modele_cam, SLOT(show()));
     connect(ui->marque, SIGNAL(currentIndexChanged(int)), ui->marque_2, SLOT(show()));
     connect(ui->marque_2, SIGNAL(currentIndexChanged(int)), ui->modele_cam_2, SLOT(show()));
+    connect(ui->up_table, SIGNAL(currentIndexChanged(int)), this, SLOT(adaptiveDisplay()));
+    connect(ui->up_valider, SIGNAL(clicked()), this, SLOT(update()));
 }
 
 void MainWindow::InitialState()
@@ -31,7 +33,6 @@ void MainWindow::InitialState()
     ui->date_sortie->setDate(QDate::currentDate());
     ui->recipe->setValue(1);
 }
-
 
 void MainWindow::save()
 {
@@ -141,12 +142,9 @@ void MainWindow::CameraReg(QString machine, QString marque, QString modele)
 
 void MainWindow::UpdatePageUpdateCombo()
 {
-    QSqlQueryModel *affaire = new QSqlQueryModel;
-    affaire->setQuery("SELECT affaire AS affaire FROM Machine");
-    for(int i = 0; i<affaire->rowCount(); i++)
-    {
-        ui->up_affaire->addItem(affaire->record(i).value("affaire").toString());
-    }
+    ui->up_affaire->clear();
+    ui->up_table->clear();
+    ui->up_champ->clear();
 
     QSqlQueryModel *table = new QSqlQueryModel;
     table->setQuery("SELECT table_name as tables FROM information_schema.tables "
@@ -156,16 +154,89 @@ void MainWindow::UpdatePageUpdateCombo()
         ui->up_table->addItem(table->record(i).value("tables").toString());
     }
 
-    QSqlQuery *query = new QSqlQuery;
-    QSqlQueryModel *columns = new QSqlQueryModel;
-    query->prepare("SELECT column_name AS columns"
-                    "FROM information_schema.columns "
-                    "WHERE table_name=':table'");
-    query->bindValue(":table", ui->up_table->currentText());
-    columns->setQuery(*query);
-    for(int i = 0; i<columns->rowCount(); i++)
+
+}
+
+void MainWindow::adaptiveDisplay()
+{
+    ui->up_champ->clear();
+    ui->up_affaire->clear();
+
+    QString cur = ui->up_table->currentText();
+
+    QSqlQueryModel *affaire = new QSqlQueryModel;
+
+    if(cur.toStdString()=="machine")
     {
-        ui->up_champ->addItem(columns->record(i).value("columns").toString());
+        affaire->setQuery("SELECT affaire AS affaire FROM Machine");
+    }
+    else
+    {
+        affaire->setQuery("SELECT machine AS affaire FROM " + cur);
+    }
+    for(int i = 0; i<affaire->rowCount(); i++)
+    {
+        ui->up_affaire->addItem(affaire->record(i).value("affaire").toString());
     }
 
+
+    QSqlQuery query;
+    QSqlQueryModel *champ = new QSqlQueryModel;
+    query.prepare("SELECT column_name AS columns "
+                    "FROM information_schema.columns "
+                    "WHERE table_name = :table");
+    query.bindValue(":table", cur);
+    query.exec();
+    champ->setQuery(query);
+    for(int i = 0; i<champ->rowCount(); i++)
+    {
+        ui->up_champ->addItem(champ->record(i).value("columns").toString());
+    }
+}
+
+void MainWindow::update()
+{
+    QString affaire = ui->up_affaire->currentText();
+    QString table = ui->up_table->currentText();
+    QString champ = ui->up_champ->currentText();
+    QString valeur = ui->up_valeur->text();
+
+    QSqlQueryModel *myType = new QSqlQueryModel;
+    myType->setQuery("SELECT DATA_TYPE AS type "
+                         "FROM INFORMATION_SCHEMA.COLUMNS "
+                         "WHERE "
+                              "TABLE_NAME = " + table +" AND "
+                              "COLUMN_NAME = " + champ);
+
+
+    QSqlQuery *query = new QSqlQuery;
+    if(table.toStdString()=="machine")
+    {
+        query->prepare("UPDATE "+ table +" "
+                       "SET "+ champ +" = :valeur "
+                       "WHERE affaire = :affaire");
+        query->bindValue(":affaire", affaire);
+    }
+    else
+    {
+        query->prepare("UPDATE "+ table +" "
+                       "SET "+ champ +" = :valeur "
+                       "WHERE machine = :affaire");
+        query->bindValue(":affaire", affaire);
+    }
+
+    if(!strcmp(myType->record(0).value("type").toString().toStdString().c_str(), "smallint") ||
+            !strcmp(myType->record(0).value("type").toString().toStdString().c_str(), "tinyint") ||
+            !strcmp(myType->record(0).value("type").toString().toStdString().c_str(), "int"))
+    {
+        query->bindValue(":valeur", valeur.toInt());
+    }
+    else
+    {
+        query->bindValue(":valeur", valeur);
+    }
+
+    query->exec();
+
+    ui->up_valeur->clear();
 }
