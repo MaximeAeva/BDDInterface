@@ -91,7 +91,7 @@ QRadioButton::indicator:unchecked {
          <number>1</number>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="Machine">
          <layout class="QGridLayout" name="gridLayout_6">
@@ -421,6 +421,20 @@ QRadioButton::indicator:unchecked {
            <widget class="QSpinBox" name="recipe">
             <property name="minimum">
              <number>1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>Affaire</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_22">
+            <property name="text">
+             <string>Nom</string>
             </property>
            </widget>
           </item>

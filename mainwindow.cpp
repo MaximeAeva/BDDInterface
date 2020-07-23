@@ -9,11 +9,16 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle(Readconfig("WINDOW"));
     this->setWindowIcon(QIcon(Readconfig("ICON")));
 
-    ConnectDB();
-    InitialState();
-    UpdatePageUpdateCombo();
+    ConnectDB();//Database Connection
+    InitialState();//Initialize Window's fields
+    Connections();//Initialize connections
 
-    connect(ui->Valider, SIGNAL(clicked()), this, SLOT(save()));
+
+}
+
+void MainWindow::Connections()//Group connected Items
+{
+    connect(ui->Valider, SIGNAL(clicked()), this, SLOT(saveMachine()));
     connect(ui->marque, SIGNAL(currentIndexChanged(int)), ui->modele_cam, SLOT(show()));
     connect(ui->marque, SIGNAL(currentIndexChanged(int)), ui->marque_2, SLOT(show()));
     connect(ui->marque_2, SIGNAL(currentIndexChanged(int)), ui->modele_cam_2, SLOT(show()));
@@ -24,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->cam_marque, SIGNAL(currentIndexChanged(int)), ui->label_21, SLOT(show()));
 }
 
-void MainWindow::InitialState()
+void MainWindow::InitialState()//Group ui initialisation
 {
     ui->date_sortie->setDate(QDate::currentDate());
     ui->modele_cam->hide();
@@ -39,6 +44,14 @@ void MainWindow::InitialState()
     ui->recipe->setValue(1);
     ui->cam_affaire->clear();
     ui->pb_affaire->clear();
+    ui->cam_modele->hide();
+    ui->label_21->hide();
+    ui->pb_resolu->setChecked(false);
+    ui->pb_description->clear();
+    ui->pb_date->setDate(QDate::currentDate());
+    ui->pb_solution->clear();
+
+
     QSqlQueryModel *affaire = new QSqlQueryModel;
     affaire->setQuery("SELECT affaire FROM Machine");
     for(int i = 0; i<affaire->rowCount(); i++)
@@ -46,12 +59,19 @@ void MainWindow::InitialState()
         ui->cam_affaire->addItem(affaire->record(i).value("affaire").toString());
         ui->pb_affaire->addItem(affaire->record(i).value("affaire").toString());
     }
-    ui->cam_modele->hide();
-    ui->label_21->hide();
+    QSqlQueryModel *table = new QSqlQueryModel;
+    table->setQuery("SELECT table_name as tables FROM information_schema.tables "
+                    "WHERE table_schema = 'Sidel'");
+    for(int i = 0; i<table->rowCount(); i++)
+    {
+        ui->up_table->addItem(table->record(i).value("tables").toString());
+    }
+
+
 
 }
 
-void MainWindow::save()
+void MainWindow::saveMachine()//Create a new machine
 {
     QString affaire = ui->affaire->text();
     QString nom_courant = ui->nom_courant->text();
@@ -87,16 +107,15 @@ void MainWindow::save()
     CameraReg(affaire, marque_2, modele_cam_2);
 
     InitialState();
-    UpdatePageUpdateCombo();
 }
 
-MainWindow::~MainWindow()
+MainWindow::~MainWindow()//kill
 {
     db.close();
     delete ui;
 }
 
-void MainWindow::ConnectDB()
+void MainWindow::ConnectDB()//Connect to DB
 {
     db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName(Readconfig("HOST"));
@@ -116,7 +135,7 @@ void MainWindow::ConnectDB()
     }
 }
 
-QString MainWindow::Readconfig(string paramName)
+QString MainWindow::Readconfig(string paramName)//Read config file
 {
     std::ifstream cfg("config.txt");
     if(!cfg.is_open())
@@ -132,7 +151,7 @@ QString MainWindow::Readconfig(string paramName)
     return 0;
 }
 
-void MainWindow::CameraReg(QString machine, QString marque, QString modele)
+void MainWindow::CameraReg(QString machine, QString marque, QString modele)//Camera system management
 {
     if(marque.isEmpty()){return;}
 
@@ -157,24 +176,7 @@ void MainWindow::CameraReg(QString machine, QString marque, QString modele)
     queryCam.exec();
 }
 
-void MainWindow::UpdatePageUpdateCombo()
-{
-    ui->up_affaire->clear();
-    ui->up_table->clear();
-    ui->up_champ->clear();
-
-    QSqlQueryModel *table = new QSqlQueryModel;
-    table->setQuery("SELECT table_name as tables FROM information_schema.tables "
-                    "WHERE table_schema = 'Sidel'");
-    for(int i = 0; i<table->rowCount(); i++)
-    {
-        ui->up_table->addItem(table->record(i).value("tables").toString());
-    }
-
-
-}
-
-void MainWindow::adaptiveDisplay()
+void MainWindow::adaptiveDisplay()//Adapt ComboBoxes contents based on other ComboBoxes
 {
     ui->up_champ->clear();
     ui->up_affaire->clear();
@@ -211,7 +213,7 @@ void MainWindow::adaptiveDisplay()
     }
 }
 
-void MainWindow::update()
+void MainWindow::update()//Update DB
 {
     QString affaire = ui->up_affaire->currentText();
     QString table = ui->up_table->currentText();
@@ -258,7 +260,7 @@ void MainWindow::update()
     ui->up_valeur->clear();
 }
 
-void MainWindow::manageSelector()
+void MainWindow::manageSelector()//Stacked Widget management
 {
     ui->stacked->setCurrentIndex(ui->selection->currentIndex());
 }

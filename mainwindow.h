@@ -27,7 +27,7 @@ public:
     ~MainWindow();
 
 public slots:
-    void save();
+    void saveMachine();
     void update();
     void manageSelector();
     void adaptiveDisplay();
@@ -37,8 +37,8 @@ private:
     QSqlDatabase db;
     void ConnectDB();
     void InitialState();
+    void Connections();
     void CameraReg(QString machine, QString marque, QString modele);
-    void UpdatePageUpdateCombo();
     QString Readconfig(string paramName);
 };
 #endif // MAINWINDOW_H
