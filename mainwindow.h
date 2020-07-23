@@ -29,6 +29,7 @@ public:
 public slots:
     void save();
     void update();
+    void manageSelector();
     void adaptiveDisplay();
 
 private:

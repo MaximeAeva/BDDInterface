@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->marque_2, SIGNAL(currentIndexChanged(int)), ui->modele_cam_2, SLOT(show()));
     connect(ui->up_table, SIGNAL(currentIndexChanged(int)), this, SLOT(adaptiveDisplay()));
     connect(ui->up_valider, SIGNAL(clicked()), this, SLOT(update()));
+    connect(ui->selection, SIGNAL(currentIndexChanged(int)), this, SLOT(manageSelector()));
 }
 
 void MainWindow::InitialState()
@@ -239,4 +240,9 @@ void MainWindow::update()
     query->exec();
 
     ui->up_valeur->clear();
+}
+
+void MainWindow::manageSelector()
+{
+    ui->stacked->setCurrentIndex(ui->selection->currentIndex());
 }
