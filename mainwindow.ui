@@ -428,13 +428,30 @@ QRadioButton::indicator:unchecked {
         </widget>
         <widget class="QWidget" name="Probleme">
          <layout class="QGridLayout" name="gridLayout_7">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="checkBox">
-            <property name="layoutDirection">
-             <enum>Qt::RightToLeft</enum>
-            </property>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_17">
             <property name="text">
-             <string>Resolu</string>
+             <string>Solution</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="pb_description"/>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="pb_solution"/>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>Origine</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Description</string>
             </property>
            </widget>
           </item>
@@ -445,57 +462,43 @@ QRadioButton::indicator:unchecked {
             </property>
            </widget>
           </item>
+          <item row="5" column="1">
+           <widget class="QDateEdit" name="pb_date">
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="1">
-           <widget class="QComboBox" name="comboBox_4"/>
+           <widget class="QComboBox" name="pb_affaire"/>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_14">
+          <item row="7" column="1">
+           <widget class="QPushButton" name="pb_valider">
             <property name="text">
-             <string>Description</string>
+             <string>Valider</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="lineEdit"/>
+          <item row="6" column="1">
+           <widget class="QComboBox" name="pb_origine"/>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_17">
-            <property name="text">
-             <string>Solution</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="lineEdit_3"/>
-          </item>
-          <item row="4" column="0">
+          <item row="5" column="0">
            <widget class="QLabel" name="label_18">
             <property name="text">
              <string>Date</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QDateEdit" name="dateEdit">
-            <property name="calendarPopup">
-             <bool>true</bool>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="pb_resolu">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
             </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_19">
             <property name="text">
-             <string>Origine</string>
+             <string>Resolu</string>
             </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QComboBox" name="comboBox"/>
-          </item>
-          <item row="6" column="1">
-           <widget class="QPushButton" name="pushButton">
-            <property name="text">
-             <string>Valider</string>
+            <property name="tristate">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -503,42 +506,6 @@ QRadioButton::indicator:unchecked {
         </widget>
         <widget class="QWidget" name="Camera">
          <layout class="QGridLayout" name="gridLayout_8">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_15">
-            <property name="text">
-             <string>Affaire</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="comboBox_3"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_20">
-            <property name="text">
-             <string>Marque</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="comboBox_5">
-            <item>
-             <property name="text">
-              <string>COGNEX</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PRESSCO</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>AUTRE</string>
-             </property>
-            </item>
-           </widget>
-          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_21">
             <property name="text">
@@ -547,7 +514,7 @@ QRadioButton::indicator:unchecked {
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QComboBox" name="ma_modele">
+           <widget class="QComboBox" name="cam_modele">
             <item>
              <property name="text">
               <string/>
@@ -598,6 +565,49 @@ QRadioButton::indicator:unchecked {
               <string>CHECK</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="cam_affaire"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>Affaire</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>Marque</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="cam_marque">
+            <item>
+             <property name="text">
+              <string>PRESSCO</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>COGNEX</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>AUTRE</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QPushButton" name="cam_valider">
+            <property name="text">
+             <string>Valider</string>
+            </property>
            </widget>
           </item>
          </layout>

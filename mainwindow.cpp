@@ -8,9 +8,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->setWindowTitle(Readconfig("WINDOW"));
     this->setWindowIcon(QIcon(Readconfig("ICON")));
-    InitialState();
+
     ConnectDB();
+    InitialState();
     UpdatePageUpdateCombo();
+
     connect(ui->Valider, SIGNAL(clicked()), this, SLOT(save()));
     connect(ui->marque, SIGNAL(currentIndexChanged(int)), ui->modele_cam, SLOT(show()));
     connect(ui->marque, SIGNAL(currentIndexChanged(int)), ui->marque_2, SLOT(show()));
@@ -18,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->up_table, SIGNAL(currentIndexChanged(int)), this, SLOT(adaptiveDisplay()));
     connect(ui->up_valider, SIGNAL(clicked()), this, SLOT(update()));
     connect(ui->selection, SIGNAL(currentIndexChanged(int)), this, SLOT(manageSelector()));
+    connect(ui->cam_marque, SIGNAL(currentIndexChanged(int)), ui->cam_modele, SLOT(show()));
+    connect(ui->cam_marque, SIGNAL(currentIndexChanged(int)), ui->label_21, SLOT(show()));
 }
 
 void MainWindow::InitialState()
@@ -33,6 +37,18 @@ void MainWindow::InitialState()
     ui->cadence->setValue(50000);
     ui->date_sortie->setDate(QDate::currentDate());
     ui->recipe->setValue(1);
+    ui->cam_affaire->clear();
+    ui->pb_affaire->clear();
+    QSqlQueryModel *affaire = new QSqlQueryModel;
+    affaire->setQuery("SELECT affaire FROM Machine");
+    for(int i = 0; i<affaire->rowCount(); i++)
+    {
+        ui->cam_affaire->addItem(affaire->record(i).value("affaire").toString());
+        ui->pb_affaire->addItem(affaire->record(i).value("affaire").toString());
+    }
+    ui->cam_modele->hide();
+    ui->label_21->hide();
+
 }
 
 void MainWindow::save()
