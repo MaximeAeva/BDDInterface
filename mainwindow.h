@@ -28,6 +28,8 @@ public:
 
 public slots:
     void saveMachine();
+    void saveProbleme();
+    void saveCamera();
     void update(const QModelIndex &index);
     void manageSelector();
     void adaptiveDisplay();

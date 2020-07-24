@@ -28,6 +28,8 @@ void MainWindow::Connections()//Group connected Items
     connect(ui->cam_marque, SIGNAL(currentIndexChanged(int)), ui->label_21, SLOT(show()));
     connect(ui->up_affaire, SIGNAL(currentIndexChanged(int)), this, SLOT(listItems()));
     connect(ui->tableView, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(update(const QModelIndex &)));
+    connect(ui->pb_valider, SIGNAL(clicked()), this, SLOT(saveProbleme()));
+    connect(ui->cam_valider, SIGNAL(clicked()), this, SLOT(saveCamera()));
 }
 
 void MainWindow::InitialState()//Group ui initialisation
@@ -105,6 +107,56 @@ void MainWindow::saveMachine()//Create a new machine
 
     CameraReg(affaire, marque, modele_cam);
     CameraReg(affaire, marque_2, modele_cam_2);
+
+    InitialState();
+}
+
+void MainWindow::saveProbleme()//Add a new Probleme
+{
+    QString machine = ui->pb_affaire->currentText();
+    int resolu = ui->pb_resolu->isChecked();
+    QString description = ui->pb_description->text();
+    QString solution = ui->pb_solution->text();
+    QDate date = ui->pb_date->date();
+    QString origine = ui->pb_origine->currentText();
+
+    QSqlQuery *query = new QSqlQuery;
+    query->prepare("INSERT INTO Probleme(resolu, machine, description, solution, date_apparition, origine) "
+                   "VALUES(:resolu, :machine, :description, :solution, :date_apparition, :origine)");
+    query->bindValue(":resolu", resolu);
+    query->bindValue(":machine", machine);
+    query->bindValue(":description", description);
+    query->bindValue(":solution", solution);
+    query->bindValue(":date_apparition", date);
+    query->bindValue(":origine", origine);
+
+    query->exec();
+
+    InitialState();
+}
+
+void MainWindow::saveCamera()//Add a new Camera
+{
+    QString machine = ui->cam_affaire->currentText();
+    QString marque = ui->cam_marque->currentText();
+    QSqlQuery *query = new QSqlQuery;
+
+    if(marque.toStdString()=="COGNEX")
+    {
+        QString modele = ui->cam_modele->currentText();
+        query->prepare("INSERT INTO Camera(machine, marque, modele) "
+                       "VALUES(:machine, :marque, :modele)");
+        query->bindValue(":modele", modele);
+    }
+    else
+    {
+        query->prepare("INSERT INTO Camera(machine, marque) "
+                       "VALUES(:machine, :marque)");
+    }
+    query->bindValue(":machine", machine);
+    query->bindValue(":marque", marque);
+
+    query->exec();
 
     InitialState();
 }
@@ -256,7 +308,7 @@ void MainWindow::manageSelector()//Stacked Widget management
     ui->stacked->setCurrentIndex(ui->selection->currentIndex());
 }
 
-void MainWindow::listItems()
+void MainWindow::listItems()//Interactive Item list
 {
     QString cur = ui->up_table->currentText();
     QString affaire = ui->up_affaire->currentText();
