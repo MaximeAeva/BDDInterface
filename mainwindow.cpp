@@ -23,10 +23,11 @@ void MainWindow::Connections()//Group connected Items
     connect(ui->marque, SIGNAL(currentIndexChanged(int)), ui->marque_2, SLOT(show()));
     connect(ui->marque_2, SIGNAL(currentIndexChanged(int)), ui->modele_cam_2, SLOT(show()));
     connect(ui->up_table, SIGNAL(currentIndexChanged(int)), this, SLOT(adaptiveDisplay()));
-    connect(ui->up_valider, SIGNAL(clicked()), this, SLOT(update()));
     connect(ui->selection, SIGNAL(currentIndexChanged(int)), this, SLOT(manageSelector()));
     connect(ui->cam_marque, SIGNAL(currentIndexChanged(int)), ui->cam_modele, SLOT(show()));
     connect(ui->cam_marque, SIGNAL(currentIndexChanged(int)), ui->label_21, SLOT(show()));
+    connect(ui->up_affaire, SIGNAL(currentIndexChanged(int)), this, SLOT(listItems()));
+    connect(ui->tableView, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(update(const QModelIndex &)));
 }
 
 void MainWindow::InitialState()//Group ui initialisation
@@ -50,7 +51,9 @@ void MainWindow::InitialState()//Group ui initialisation
     ui->pb_description->clear();
     ui->pb_date->setDate(QDate::currentDate());
     ui->pb_solution->clear();
-
+    ui->up_table->clear();
+    ui->up_affaire->clear();
+    ui->up_valeur->clear();
 
     QSqlQueryModel *affaire = new QSqlQueryModel;
     affaire->setQuery("SELECT affaire FROM Machine");
@@ -66,9 +69,6 @@ void MainWindow::InitialState()//Group ui initialisation
     {
         ui->up_table->addItem(table->record(i).value("tables").toString());
     }
-
-
-
 }
 
 void MainWindow::saveMachine()//Create a new machine
@@ -178,7 +178,6 @@ void MainWindow::CameraReg(QString machine, QString marque, QString modele)//Cam
 
 void MainWindow::adaptiveDisplay()//Adapt ComboBoxes contents based on other ComboBoxes
 {
-    ui->up_champ->clear();
     ui->up_affaire->clear();
 
     QString cur = ui->up_table->currentText();
@@ -187,7 +186,7 @@ void MainWindow::adaptiveDisplay()//Adapt ComboBoxes contents based on other Com
 
     if(cur.toStdString()=="machine")
     {
-        affaire->setQuery("SELECT affaire AS affaire FROM Machine");
+        affaire->setQuery("SELECT affaire FROM Machine");
     }
     else
     {
@@ -197,28 +196,17 @@ void MainWindow::adaptiveDisplay()//Adapt ComboBoxes contents based on other Com
     {
         ui->up_affaire->addItem(affaire->record(i).value("affaire").toString());
     }
-
-
-    QSqlQuery query;
-    QSqlQueryModel *champ = new QSqlQueryModel;
-    query.prepare("SELECT column_name AS columns "
-                    "FROM information_schema.columns "
-                    "WHERE table_name = :table");
-    query.bindValue(":table", cur);
-    query.exec();
-    champ->setQuery(query);
-    for(int i = 0; i<champ->rowCount(); i++)
-    {
-        ui->up_champ->addItem(champ->record(i).value("columns").toString());
-    }
 }
 
-void MainWindow::update()//Update DB
+void MainWindow::update(const QModelIndex &index)//Update DB
 {
     QString affaire = ui->up_affaire->currentText();
     QString table = ui->up_table->currentText();
-    QString champ = ui->up_champ->currentText();
     QString valeur = ui->up_valeur->text();
+
+    QItemSelectionModel *select = ui->tableView->selectionModel();
+    QString champ = ui->tableView->model()->headerData(select->currentIndex().column(), Qt::Horizontal).toString();
+    int id = ui->tableView->model()->data(ui->tableView->model()->index(index.row(),0)).toInt();
 
     QSqlQueryModel *myType = new QSqlQueryModel;
     myType->setQuery("SELECT DATA_TYPE AS type "
@@ -240,8 +228,9 @@ void MainWindow::update()//Update DB
     {
         query->prepare("UPDATE "+ table +" "
                        "SET "+ champ +" = :valeur "
-                       "WHERE machine = :affaire");
+                       "WHERE machine = :affaire AND numero = :id");
         query->bindValue(":affaire", affaire);
+        query->bindValue(":id", id);
     }
 
     if(!strcmp(myType->record(0).value("type").toString().toStdString().c_str(), "smallint") ||
@@ -258,9 +247,29 @@ void MainWindow::update()//Update DB
     query->exec();
 
     ui->up_valeur->clear();
+
+    listItems();
 }
 
 void MainWindow::manageSelector()//Stacked Widget management
 {
     ui->stacked->setCurrentIndex(ui->selection->currentIndex());
 }
+
+void MainWindow::listItems()
+{
+    QString cur = ui->up_table->currentText();
+    QString affaire = ui->up_affaire->currentText();
+
+    QSqlQueryModel *model = new QSqlQueryModel;
+    if(cur.toStdString()=="machine")
+    {
+        model->setQuery("SELECT * FROM " + cur + " WHERE affaire = '" + affaire + "'");
+    }
+    else
+    {
+        model->setQuery("SELECT * FROM " + cur + " WHERE machine = '" + affaire + "'");
+    }
+    ui->tableView->setModel(model);
+}
+

@@ -28,9 +28,10 @@ public:
 
 public slots:
     void saveMachine();
-    void update();
+    void update(const QModelIndex &index);
     void manageSelector();
     void adaptiveDisplay();
+    void listItems();
 
 private:
     Ui::MainWindow *ui;
