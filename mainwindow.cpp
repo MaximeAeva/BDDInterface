@@ -109,6 +109,7 @@ void MainWindow::saveMachine()//Create a new machine
     CameraReg(affaire, marque_2, modele_cam_2);
 
     InitialState();
+    adaptiveDisplay();
 }
 
 void MainWindow::saveProbleme()//Add a new Probleme
@@ -133,6 +134,7 @@ void MainWindow::saveProbleme()//Add a new Probleme
     query->exec();
 
     InitialState();
+    adaptiveDisplay();
 }
 
 void MainWindow::saveCamera()//Add a new Camera
@@ -159,6 +161,7 @@ void MainWindow::saveCamera()//Add a new Camera
     query->exec();
 
     InitialState();
+    adaptiveDisplay();
 }
 
 MainWindow::~MainWindow()//kill
@@ -238,11 +241,11 @@ void MainWindow::adaptiveDisplay()//Adapt ComboBoxes contents based on other Com
 
     if(cur.toStdString()=="machine")
     {
-        affaire->setQuery("SELECT affaire FROM Machine");
+        affaire->setQuery("SELECT DISTINCT affaire FROM Machine");
     }
     else
     {
-        affaire->setQuery("SELECT machine AS affaire FROM " + cur);
+        affaire->setQuery("SELECT DISTINCT machine AS affaire FROM " + cur);
     }
     for(int i = 0; i<affaire->rowCount(); i++)
     {
