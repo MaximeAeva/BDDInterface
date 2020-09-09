@@ -332,5 +332,5 @@ void MainWindow::listItems()//Interactive Item list
 
 void MainWindow::webPage()
 {
-        ui->webPage->load(QUrl("http://localhost:3000/d/7slNrbWGz/capfeeder?from=1513641600000&to=1595376000000&orgId=1"));
+        ui->webPage->load(QUrl(Readconfig("PAGE")));
 }
