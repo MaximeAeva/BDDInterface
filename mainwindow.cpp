@@ -7,13 +7,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle(Readconfig("WINDOW"));
-    this->setWindowIcon(QIcon(Readconfig("ICON")));
+    this->setWindowIcon(QIcon(QCoreApplication::applicationDirPath() +"/icone.ico"));
 
     ConnectDB();//Database Connection
     InitialState();//Initialize Window's fields
     Connections();//Initialize connections
-
-
 }
 
 void MainWindow::Connections()//Group connected Items
@@ -34,6 +32,7 @@ void MainWindow::Connections()//Group connected Items
 
 void MainWindow::InitialState()//Group ui initialisation
 {
+    ui->useless->hide();
     ui->date_sortie->setDate(QDate::currentDate());
     ui->modele_cam->hide();
     ui->modele_cam_2->hide();
@@ -71,6 +70,7 @@ void MainWindow::InitialState()//Group ui initialisation
     {
         ui->up_table->addItem(table->record(i).value("tables").toString());
     }
+    webPage();
 }
 
 void MainWindow::saveMachine()//Create a new machine
@@ -167,6 +167,7 @@ void MainWindow::saveCamera()//Add a new Camera
 MainWindow::~MainWindow()//kill
 {
     db.close();
+
     delete ui;
 }
 
@@ -288,9 +289,9 @@ void MainWindow::update(const QModelIndex &index)//Update DB
         query->bindValue(":id", id);
     }
 
-    if(!strcmp(myType->record(0).value("type").toString().toStdString().c_str(), "smallint") ||
-            !strcmp(myType->record(0).value("type").toString().toStdString().c_str(), "tinyint") ||
-            !strcmp(myType->record(0).value("type").toString().toStdString().c_str(), "int"))
+    if(!qstrcmp(myType->record(0).value("type").toString().toStdString().c_str(), "smallint") ||
+            !qstrcmp(myType->record(0).value("type").toString().toStdString().c_str(), "tinyint") ||
+            !qstrcmp(myType->record(0).value("type").toString().toStdString().c_str(), "int"))
     {
         query->bindValue(":valeur", valeur.toInt());
     }
@@ -304,6 +305,7 @@ void MainWindow::update(const QModelIndex &index)//Update DB
     ui->up_valeur->clear();
 
     listItems();
+    webPage();
 }
 
 void MainWindow::manageSelector()//Stacked Widget management
@@ -328,3 +330,7 @@ void MainWindow::listItems()//Interactive Item list
     ui->tableView->setModel(model);
 }
 
+void MainWindow::webPage()
+{
+        ui->webPage->load(QUrl("http://localhost:3000/d/7slNrbWGz/capfeeder?from=1513641600000&to=1595376000000&orgId=1"));
+}

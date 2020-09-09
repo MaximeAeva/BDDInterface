@@ -9,6 +9,9 @@
 #include <QtSql>
 #include <QString>
 #include <QSqlError>
+#include <QtWebEngineWidgets>
+#include <QWebEngineView>
+#include <QUrl>
 #include <fstream>
 #include <cstring>
 
@@ -41,6 +44,7 @@ private:
     void ConnectDB();
     void InitialState();
     void Connections();
+    void webPage();
     void CameraReg(QString machine, QString marque, QString modele);
     QString Readconfig(string paramName);
 };
