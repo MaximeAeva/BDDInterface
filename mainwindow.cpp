@@ -65,7 +65,7 @@ void MainWindow::InitialState()//Group ui initialisation
     }
     QSqlQueryModel *table = new QSqlQueryModel;
     table->setQuery("SELECT table_name as tables FROM information_schema.tables "
-                    "WHERE table_schema = 'Sidel'");
+                    "WHERE table_schema = "+Readconfig("NAME"));
     for(int i = 0; i<table->rowCount(); i++)
     {
         ui->up_table->addItem(table->record(i).value("tables").toString());
